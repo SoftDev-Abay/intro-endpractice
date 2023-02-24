@@ -77,14 +77,26 @@ def getResumeData(url):
     except Exception as excepttion:
         print(excepttion)
         data.append(0)
+    try:
+        gender = soup.select('[data-qa="resume-personal-gender"]')[0].text
+        if gender[0].upper() == 'M' or gender[0].upper() == 'М':
+            gender = True
+        else:
+            gender = False
+        data.append(gender)
+    except Exception as e:
+        data.append(0)
+        print(e)
 
     # print(title,specialization,salary)
-    return (data)
+    return data
 # print(getAllLinks())
-n = 1
-while n <3:
-    n+=1
-    url = "https://hh.kz/search/resume?page=" +str(n)
-    for resumeUrl in getAllLinks(url):
-        print(getResumeData(resumeUrl))
-    url = ""
+def getData(n,searchtext)->list:
+    result=[]
+    while n <3:
+        n+=1
+        url = "https://hh.kz/search/resume?text=" +searchtext +"&area=40&isDefaultArea=true&pos=full_text&logic=normal&exp_period=all_time&currency_code=KZT&ored_clusters=true&order_by=relevance&page=" +str(n)
+        for resumeUrl in getAllLinks(url):
+            result.append(getResumeData(resumeUrl))
+        url = ""
+print(getData(3,"java"))
