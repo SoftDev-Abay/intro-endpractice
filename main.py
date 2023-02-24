@@ -87,16 +87,19 @@ def getResumeData(url):
     except Exception as e:
         data.append(0)
         print(e)
-
+    data.append(url)
     # print(title,specialization,salary)
+    print (data)
     return data
 # print(getAllLinks())
-def getData(n,searchtext)->list:
+def getData(b,searchtext)->list:
     result=[]
-    while n <3:
+    n=0
+    while n <b:
         n+=1
-        url = "https://hh.kz/search/resume?text=" +searchtext +"&area=40&isDefaultArea=true&pos=full_text&logic=normal&exp_period=all_time&currency_code=KZT&ored_clusters=true&order_by=relevance&page=" +str(n)
+        url = "https://hh.kz/search/resume?text=" +str(searchtext) +"&area=40&isDefaultArea=true&pos=full_text&logic=normal&exp_period=all_time&currency_code=KZT&ored_clusters=true&order_by=relevance&page=" +str(n)
         for resumeUrl in getAllLinks(url):
             result.append(getResumeData(resumeUrl))
         url = ""
+    return result
 print(getData(3,"java"))
