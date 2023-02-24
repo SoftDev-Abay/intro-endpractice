@@ -42,6 +42,7 @@ def getResumeData(url):
             raise Exception("less than 2")
         employment = soup.find("div", class_="resume-block-container").contents[1].text
         employment = employment.replace("Занятость: ", '')
+        employment = employment.replace("Employment: ", '')
         data.append(employment)
     except Exception as excepttion:
         print(excepttion)
@@ -51,6 +52,7 @@ def getResumeData(url):
         #     raise Exception("less than 2")
         schedule = soup.find("div", class_="resume-block-container").contents[2].text
         schedule = schedule.replace("График работы: ", '')
+        schedule = schedule.replace("Work schedule: ", '')
         data.append(schedule)
     except Exception as excepttion:
         print(excepttion)
@@ -64,7 +66,8 @@ def getResumeData(url):
         # experience_years = list(filter(lambda x: x.isdigit(), experience_years))
         experience_years = experience_years.replace("Опыт работы ", '')
         experience_years = experience_years.split()[0:4]
-        data.append(experience_years)
+        data.append(experience_years[0]+" "+ experience_years[1])
+        data.append(experience_years[2] + " " + experience_years[3])
     except Exception as excepttion:
         print(excepttion)
         data.append(0)
@@ -73,6 +76,7 @@ def getResumeData(url):
         #     raise Exception("less than 2")
         citisenship = soup.select('[data-qa="resume-block-additional"] > .resume-block-item-gap > ''.bloko-columns-row > .bloko-column > .resume-block-container > p')[0].text
         citisenship = citisenship.replace("Гражданство: ", '')
+        citisenship = citisenship.replace("Citizenship: ", '')
         data.append(citisenship)
     except Exception as excepttion:
         print(excepttion)
